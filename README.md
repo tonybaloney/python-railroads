@@ -9,7 +9,11 @@ Run:
 $ python main.py
 ```
 
+# The try statement
+
 ![Try Statement](try-statement.svg)
+
+# The with statement
 
 ![With Statement](with-statement.svg)
 
