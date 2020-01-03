@@ -196,6 +196,10 @@ DEFAULT_STYLE = '''\
 		font:bold 14px monospace;
 		text-anchor:middle;
 	}
+	svg.railroad-diagram text.arrow {
+		font:bold 24px monospace;
+		text-anchor:middle;
+	}
 	svg.railroad-diagram text.label{
 		text-anchor:start;
 	}
@@ -1060,6 +1064,29 @@ class End(DiagramItem):
 
 	def __repr__(self):
 		return 'End(type=%r)' % self.type
+
+
+class Arrow(DiagramItem):
+	def __init__(self, text, ):
+		DiagramItem.__init__(self, 'g', {'class': 'arrow'})
+		self.text = text
+		self.width = len(text) * CHAR_WIDTH + 20
+		self.up = 11
+		self.down = 11
+		self.needsSpace = True
+		addDebug(self)
+
+	def __repr__(self):
+		return 'Arrow(%r)' % (self.text)
+
+	def format(self, x, y, width):
+		leftGap, rightGap = determineGaps(width, self.width)
+		# Hook up the two sides if self is narrower than its stated width.
+		Path(x, y).h(leftGap + self.width).addTo(self)
+		Path(x + leftGap + self.width, y).h(rightGap).addTo(self)
+		text = DiagramItem('text', {'x': x + leftGap + self.width / 2, 'y': y + 8, 'class': 'arrow'}, self.text)
+		text.addTo(self)
+		return self
 
 
 class Terminal(DiagramItem):

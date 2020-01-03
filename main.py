@@ -21,7 +21,7 @@ TRY_STATEMENT = Diagram(
                                )
                            )
                        )
-                   )
+                   ), Arrow('<')
                ),
                Optional(
                    Sequence(
@@ -57,7 +57,7 @@ WITH_STATEMENT = Diagram(
     Optional(OneOrMore(Sequence(
         Terminal(', as'),
         NonTerminal('expr')
-    ))),
+    ), Arrow('<'))),
     Terminal(':'),
     NonTerminal('suite')
 )
